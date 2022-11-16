@@ -1,26 +1,12 @@
 <template>
   <q-page class="row justify-evenly q-mt-md">
-    <!-- <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component> -->
-    <div class="q-pa-md" style="max-width: 600px">
-      <div v-for="todo in todos" :key="todo.id" class="q-mb-md">
-        <div class="row justify-between items-center bg-grey-1 q-py-xs q-px-md">
-          <span class="text-subtitle1">{{ todo.title }}</span>
-          <q-checkbox v-model="todo.done" class="text-right" />
-        </div>
-        <div class="text-caption q-py-xs q-px-md">{{ todo.content }}</div>
-      </div>
-    </div>
+    <Notes title="Notes" :todos="todos" />
   </q-page>
 </template>
 
 <script setup lang="ts">
 import { Todo } from "components/models";
-// import ExampleComponent from 'components/ExampleComponent.vue';
+import Notes from "components/Notes.vue";
 import { ref } from "vue";
 
 const todos = ref<Todo[]>([
