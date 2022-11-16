@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md" style="max-width: 600px">
+  <q-card class="q-pa-md col-md-8 col">
     <div v-for="todo in todos" :key="todo.id" class="q-mb-md">
       <div class="q-mb-md">
         <div
@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </q-card>
 </template>
 
 <script setup lang="ts">

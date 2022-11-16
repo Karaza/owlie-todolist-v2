@@ -1,5 +1,5 @@
 <template>
-  <q-page class="row justify-evenly q-mt-md">
+  <q-page class="row justify-evenly q-mt-lg">
     <Notes title="Notes" :todos="todos" />
   </q-page>
 </template>
