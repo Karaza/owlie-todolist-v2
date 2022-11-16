@@ -23,7 +23,7 @@
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <div class="q-pa-md">
-        <q-title class="text-h6">Me connecter</q-title>
+        <p class="text-h6">Me connecter</p>
         <p class="text-caption text-grey">
           Entrez vos identifiants pour vous connecter
         </p>
