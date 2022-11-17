@@ -1,8 +1,11 @@
 import { defineStore } from "pinia";
 import { Note } from "../components/models";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 
 import { db } from "../firebase";
+
+const notesCollectionRef = collection(db, "notes");
+const notesCollectionQuery = query(notesCollectionRef, orderBy("date", "desc"));
 
 export const useNotesStore = defineStore("notesStore", {
   state: () => {
@@ -12,18 +15,21 @@ export const useNotesStore = defineStore("notesStore", {
   },
   actions: {
     async getNotes() {
-      const querySnapshot = await getDocs(collection(db, "notes"));
+      onSnapshot(notesCollectionQuery, (querySnapshot) => {
+        const notes: Note[] = [];
+        querySnapshot.forEach((doc) => {
+          const note: Note = {
+            id: doc.id,
+            title: doc.data().title,
+            content: doc.data().content,
+            date: doc.data().date,
+            done: doc.data().done,
+            expanded: doc.data().expanded,
+          };
+          notes.push(note);
+        });
 
-      querySnapshot.forEach((doc) => {
-        const note: Note = {
-          id: doc.id,
-          title: doc.data().title,
-          content: doc.data().content,
-          done: doc.data().done,
-          expanded: doc.data().expanded,
-        };
-
-        this.notes.push(note);
+        this.notes = notes;
       });
     },
     addNote(newNoteTitle: string) {
