@@ -55,16 +55,16 @@
         <p class="text-caption text-grey">
           Entrez vos identifiants pour vous connecter
         </p>
-        <q-form>
+        <q-form @submit.prevent="onSubmit">
           <q-input
-            v-model="email"
+            v-model="credentials.email"
             class="q-mb-md"
             filled
             type="email"
             placeholder="Email"
           />
           <q-input
-            v-model="password"
+            v-model="credentials.password"
             class="q-mb-md"
             filled
             placeholder="Mot de passe"
@@ -79,10 +79,16 @@
             </template>
           </q-input>
           <div>
-            <q-btn label="Me connecter" type="submit" color="secondary" /><br />
             <q-btn
+              type="submit"
+              @click="register = false"
+              label="Me connecter"
+              color="secondary"
+            /><br />
+            <q-btn
+              type="submit"
+              @click="register = true"
               label="Créer un compte"
-              type="reset"
               color="primary"
               flat
               class="q-mt-sm"
@@ -100,7 +106,7 @@
 
 <script setup lang="ts">
 // Imports
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import { useNotesStore } from "src/stores/notesStore";
 
 // Store
@@ -119,9 +125,29 @@ const addNote = () => {
 // Refs
 const leftDrawerOpen = ref(false);
 const addNoteInputVisible = ref(false);
-const email = ref("");
-const password = ref("");
+
+// Register / login
+const register = ref(false);
 const isPwd = ref(true);
+
+// Credentiels
+const credentials = reactive({
+  email: "",
+  password: "",
+});
+
+// Submit
+const onSubmit = () => {
+  if (!credentials.email || !credentials.password) {
+    alert("Veuillez saisir un email et un mot de passe");
+  } else {
+    if (register.value) {
+      console.log("Register user with these credentials:", credentials);
+    } else {
+      console.log("Login user with these credentials:", credentials);
+    }
+  }
+};
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
