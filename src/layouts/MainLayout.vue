@@ -17,7 +17,7 @@
       </q-toolbar>
 
       <q-toolbar inset>
-        <q-toolbar-title v-show="!addTodoInputVisible" class="q-pt-md q-pb-lg">
+        <q-toolbar-title v-show="!addNoteInputVisible" class="q-pt-md q-pb-lg">
           Owlie Todolist
         </q-toolbar-title>
         <q-input
@@ -29,7 +29,7 @@
           label="Ajouter un élement"
           bg-color="dark"
           color="secondary"
-          v-show="addTodoInputVisible"
+          v-show="addNoteInputVisible"
           class="col col-md-6 q-mx-auto"
         >
           <template v-slot:append>
@@ -38,8 +38,8 @@
         </q-input>
       </q-toolbar>
       <q-btn
-        @click="toggleAddTodoInputVisibility"
-        v-show="!addTodoInputVisible"
+        @click="toggleAddNoteInputVisibility"
+        v-show="!addNoteInputVisible"
         round
         fab-mini
         icon="add"
@@ -113,12 +113,12 @@ const newNote = ref("");
 const addNote = () => {
   notesStore.addNote(newNote.value);
   newNote.value = "";
-  toggleAddTodoInputVisibility();
+  toggleAddNoteInputVisibility();
 };
 
 // Refs
 const leftDrawerOpen = ref(false);
-const addTodoInputVisible = ref(false);
+const addNoteInputVisible = ref(false);
 const email = ref("");
 const password = ref("");
 const isPwd = ref(true);
@@ -127,7 +127,7 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 
-function toggleAddTodoInputVisibility() {
-  addTodoInputVisible.value = !addTodoInputVisible.value;
+function toggleAddNoteInputVisibility() {
+  addNoteInputVisible.value = !addNoteInputVisible.value;
 }
 </script>

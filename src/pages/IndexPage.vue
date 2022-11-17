@@ -1,6 +1,6 @@
 <template>
   <q-page class="row justify-evenly q-mt-lg">
-    <Notes title="Notes" :todos="notesStore.notes" />
+    <Notes title="Notes" :notes="notesStore.notes" />
   </q-page>
 </template>
 
