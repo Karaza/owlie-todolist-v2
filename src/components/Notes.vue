@@ -14,10 +14,19 @@
           />
         </div>
         <div
-          class="text-caption q-py-xs q-px-md"
+          class="cursor-edit text-caption q-py-xs q-px-md"
           :class="{ ellipsis: !note.expanded }"
         >
           {{ note.content }}
+          <q-popup-edit v-model="note.content" auto-save v-slot="scope">
+            <q-input
+              v-model="scope.value"
+              dense
+              autofocus
+              counter
+              @keyup.enter="notesStore.editNote(note.id, scope.value)"
+            />
+          </q-popup-edit>
         </div>
       </div>
     </div>

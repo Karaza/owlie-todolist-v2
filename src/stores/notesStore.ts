@@ -18,7 +18,7 @@ export const useNotesStore = defineStore("notesStore", {
           content:
             "Reprehenderit mollitia, illo officia facere tenetur est repellat Reprehenderit mollitia, illo officia facere tenetur est repellat Reprehenderit mollitia, illo officia facere tenetur est repellat",
           done: false,
-          expanded: true,
+          expanded: false,
         },
         {
           id: 3,
@@ -47,6 +47,10 @@ export const useNotesStore = defineStore("notesStore", {
       this.notes = this.notes.filter((note) => {
         return note.id !== idToDelete;
       });
+    },
+    editNote(id: number, newNoteContent: string) {
+      let index = this.notes.findIndex((note) => note.id === id);
+      this.notes[index].content = newNoteContent;
     },
   },
 });
