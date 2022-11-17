@@ -9,6 +9,7 @@ import {
   addDoc,
   doc,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 import { db } from "../firebase";
@@ -61,10 +62,8 @@ export const useNotesStore = defineStore("notesStore", {
     async deleteNote(idToDelete: string) {
       await deleteDoc(doc(notesCollectionRef, idToDelete));
     },
-    editNote(id: string, newNoteContent: string) {
-      // let index = this.notes.findIndex((note) => note.id === id);
-      // this.notes[index].content = newNoteContent;
-      console.log("editNote");
+    async editNote(id: string, newNoteContent: string) {
+      await updateDoc(doc(notesCollectionRef, id), { content: newNoteContent });
     },
   },
 });
