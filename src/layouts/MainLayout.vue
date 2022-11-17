@@ -24,7 +24,8 @@
           dark
           filled
           bottom-slots
-          v-model="text"
+          v-model="newNote"
+          autofocus
           label="Ajouter un élement"
           bg-color="dark"
           color="secondary"
@@ -32,19 +33,13 @@
           class="col col-md-6 q-mx-auto"
         >
           <template v-slot:append>
-            <q-btn
-              @click="toggleAddTodoInputVisibility"
-              dense
-              round
-              icon="add"
-              color="secondary"
-            />
+            <q-btn @click="addNote" dense round icon="add" color="secondary" />
           </template>
         </q-input>
       </q-toolbar>
       <q-btn
-        v-show="!addTodoInputVisible"
         @click="toggleAddTodoInputVisibility"
+        v-show="!addTodoInputVisible"
         round
         fab-mini
         icon="add"
@@ -104,14 +99,29 @@
 </template>
 
 <script setup lang="ts">
+// Imports
 import { ref } from "vue";
+import { useNotesStore } from "src/stores/notesStore";
 
+// Store
+const notesStore = useNotesStore();
+
+// Notes
+const newNote = ref("");
+
+// Add note
+const addNote = () => {
+  notesStore.addNote(newNote.value);
+  newNote.value = "";
+  toggleAddTodoInputVisibility();
+};
+
+// Refs
 const leftDrawerOpen = ref(false);
 const addTodoInputVisible = ref(false);
 const email = ref("");
 const password = ref("");
 const isPwd = ref(true);
-const text = ref("");
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;

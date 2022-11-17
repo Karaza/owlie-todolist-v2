@@ -31,4 +31,17 @@ export const useNotesStore = defineStore("notesStore", {
       ],
     };
   },
+  actions: {
+    addNote(newNoteTitle: string) {
+      let note = {
+        id: new Date().getTime(), // could use uuid instead, timestamp for simplicity for now
+        title: newNoteTitle,
+        content: "Note vide pour le moment, cliquez pour éditer",
+        done: false,
+        expanded: false,
+      };
+
+      this.notes.unshift(note);
+    },
+  },
 });
