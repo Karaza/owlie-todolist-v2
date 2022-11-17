@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md col-md-8 col">
-    <div v-for="note in notes" :key="note.id" class="q-mb-md">
+    <div v-for="(note, index) in notes" :key="index" class="q-mb-md">
       <div class="q-mb-md">
         <div
           @click="note.expanded = !note.expanded"

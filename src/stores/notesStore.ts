@@ -1,56 +1,52 @@
 import { defineStore } from "pinia";
+import { Note } from "../components/models";
+import { collection, getDocs } from "firebase/firestore";
+
+import { db } from "../firebase";
 
 export const useNotesStore = defineStore("notesStore", {
   state: () => {
     return {
-      notes: [
-        {
-          id: 1,
-          title: "Title 1",
-          content:
-            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atquesuscipit in aperiam veniam. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atquesuscipit in aperiam veniam.",
-          done: false,
-          expanded: false,
-        },
-        {
-          id: 2,
-          title: "Title 2",
-          content:
-            "Reprehenderit mollitia, illo officia facere tenetur est repellat Reprehenderit mollitia, illo officia facere tenetur est repellat Reprehenderit mollitia, illo officia facere tenetur est repellat",
-          done: false,
-          expanded: false,
-        },
-        {
-          id: 3,
-          title: "Title 3",
-          content:
-            "Repellendus soluta at nemo minus, molestiae doloremque Repellendus soluta at nemo minus, molestiae doloremque Repellendus soluta at nemo minus, molestiae doloremque.",
-          done: false,
-          expanded: false,
-        },
-      ],
+      notes: [] as Note[],
     };
   },
   actions: {
-    addNote(newNoteTitle: string) {
-      let note = {
-        id: new Date().getTime(), // could use uuid instead, timestamp for simplicity for now
-        title: newNoteTitle,
-        content: "Note vide pour le moment, cliquez pour éditer",
-        done: false,
-        expanded: false,
-      };
+    async getNotes() {
+      const querySnapshot = await getDocs(collection(db, "notes"));
 
-      this.notes.unshift(note);
-    },
-    deleteNote(idToDelete: number) {
-      this.notes = this.notes.filter((note) => {
-        return note.id !== idToDelete;
+      querySnapshot.forEach((doc) => {
+        const note: Note = {
+          id: doc.id,
+          title: doc.data().title,
+          content: doc.data().content,
+          done: doc.data().done,
+          expanded: doc.data().expanded,
+        };
+
+        this.notes.push(note);
       });
     },
-    editNote(id: number, newNoteContent: string) {
-      let index = this.notes.findIndex((note) => note.id === id);
-      this.notes[index].content = newNoteContent;
+    addNote(newNoteTitle: string) {
+      // let note: Note = {
+      //   id: new Date().getTime().toString(), // could use uuid instead, timestamp for simplicity for now
+      //   title: newNoteTitle,
+      //   content: "Note vide pour le moment, cliquez pour éditer",
+      //   done: false,
+      //   expanded: false,
+      // };
+      // this.notes.unshift(note);
+      console.log("addNote");
+    },
+    deleteNote(idToDelete: string) {
+      // this.notes = this.notes.filter((note) => {
+      //   return note.id !== idToDelete;
+      // });
+      console.log("deleteNote");
+    },
+    editNote(id: string, newNoteContent: string) {
+      // let index = this.notes.findIndex((note) => note.id === id);
+      // this.notes[index].content = newNoteContent;
+      console.log("editNote");
     },
   },
 });

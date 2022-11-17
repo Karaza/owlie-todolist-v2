@@ -1,7 +1,9 @@
 export interface Note {
-  id: number;
+  id: string;
   title: string;
   content: string;
   done: boolean;
   expanded: boolean;
 }
+
+const arr: Note[] = [];
