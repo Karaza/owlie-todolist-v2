@@ -1,6 +1,13 @@
 import { defineStore } from "pinia";
 import { Note } from "../components/models";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+// import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  addDoc,
+} from "firebase/firestore";
 
 import { db } from "../firebase";
 
@@ -38,16 +45,16 @@ export const useNotesStore = defineStore("notesStore", {
         this.notesLoaded = true;
       });
     },
-    addNote(newNoteTitle: string) {
-      // let note: Note = {
-      //   id: new Date().getTime().toString(), // could use uuid instead, timestamp for simplicity for now
-      //   title: newNoteTitle,
-      //   content: "Note vide pour le moment, cliquez pour éditer",
-      //   done: false,
-      //   expanded: false,
-      // };
-      // this.notes.unshift(note);
-      console.log("addNote");
+    async addNote(newNoteTitle: string) {
+      let note: Note = {
+        title: newNoteTitle,
+        content: "Note vide pour le moment, cliquez pour éditer",
+        date: new Date().getTime(),
+        done: false,
+        expanded: false,
+      };
+
+      await addDoc(notesCollectionRef, note);
     },
     deleteNote(idToDelete: string) {
       // this.notes = this.notes.filter((note) => {
