@@ -151,10 +151,9 @@ const onSubmit = () => {
     alert("Veuillez saisir un email et un mot de passe");
   } else {
     if (register.value) {
-      // console.log("Register user with these credentials:", credentials);
       authStore.registerUser(credentials);
     } else {
-      console.log("Login user with these credentials:", credentials);
+      authStore.loginUser(credentials);
     }
   }
 };
