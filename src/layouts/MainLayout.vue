@@ -95,6 +95,13 @@
             />
           </div>
         </q-form>
+        <!-- Logout button here as long as we don't have user in state -->
+        <q-btn
+          @click="authStore.logoutUser"
+          label="Me déconnecter"
+          class="q-mt-sm"
+          color="pink"
+        />
       </div>
     </q-drawer>
 
