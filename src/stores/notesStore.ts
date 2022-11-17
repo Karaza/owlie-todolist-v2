@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { Note } from "../components/models";
-// import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import {
   collection,
   onSnapshot,
