@@ -7,6 +7,8 @@ import {
   orderBy,
   query,
   addDoc,
+  doc,
+  deleteDoc,
 } from "firebase/firestore";
 
 import { db } from "../firebase";
@@ -56,11 +58,8 @@ export const useNotesStore = defineStore("notesStore", {
 
       await addDoc(notesCollectionRef, note);
     },
-    deleteNote(idToDelete: string) {
-      // this.notes = this.notes.filter((note) => {
-      //   return note.id !== idToDelete;
-      // });
-      console.log("deleteNote");
+    async deleteNote(idToDelete: string) {
+      await deleteDoc(doc(notesCollectionRef, idToDelete));
     },
     editNote(id: string, newNoteContent: string) {
       // let index = this.notes.findIndex((note) => note.id === id);

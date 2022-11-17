@@ -11,7 +11,7 @@
         >
           <span class="text-subtitle1">{{ note.title }}</span>
           <q-checkbox
-            @click="notesStore.deleteNote(note.id)"
+            @click="notesStore.deleteNote(note.id as string)"
             v-model="note.done"
             class="text-right"
           />
@@ -27,7 +27,7 @@
               dense
               autofocus
               counter
-              @keyup.enter="notesStore.editNote(note.id, scope.value)"
+              @keyup.enter="notesStore.editNote(note.id as string, scope.value)"
             />
           </q-popup-edit>
         </div>
