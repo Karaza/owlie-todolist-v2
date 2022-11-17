@@ -1,6 +1,9 @@
 <template>
   <q-page class="row justify-evenly q-mt-lg">
-    <Notes title="Notes" :notes="notesStore.notes" />
+    <p v-if="!notesStore.notesLoaded">Chargement...</p>
+    <template v-else>
+      <Notes title="Notes" :notes="notesStore.notes" />
+    </template>
   </q-page>
 </template>
 

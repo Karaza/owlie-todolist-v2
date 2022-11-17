@@ -1,5 +1,8 @@
 <template>
-  <div class="q-pa-md col-md-8 col">
+  <p v-if="!notesStore.notes.length" class="text-h6">
+    Aucun élement pour le moment...
+  </p>
+  <div v-else class="q-pa-md col-md-8 col">
     <div v-for="(note, index) in notes" :key="index" class="q-mb-md">
       <div class="q-mb-md">
         <div
