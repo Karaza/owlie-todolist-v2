@@ -108,9 +108,11 @@
 // Imports
 import { reactive, ref } from "vue";
 import { useNotesStore } from "src/stores/notesStore";
+import { useAuthStore } from "src/stores/authStore";
 
 // Store
 const notesStore = useNotesStore();
+const authStore = useAuthStore();
 
 // Notes
 const newNote = ref("");
@@ -130,7 +132,7 @@ const addNoteInputVisible = ref(false);
 const register = ref(false);
 const isPwd = ref(true);
 
-// Credentiels
+// Credentials
 const credentials = reactive({
   email: "",
   password: "",
@@ -142,7 +144,8 @@ const onSubmit = () => {
     alert("Veuillez saisir un email et un mot de passe");
   } else {
     if (register.value) {
-      console.log("Register user with these credentials:", credentials);
+      // console.log("Register user with these credentials:", credentials);
+      authStore.registerUser(credentials);
     } else {
       console.log("Login user with these credentials:", credentials);
     }
