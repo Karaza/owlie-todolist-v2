@@ -25,7 +25,6 @@ export const useNotesStore = defineStore("notesStore", {
   },
   actions: {
     async getNotes() {
-      console.log("getNotes");
       this.notesLoaded = false;
 
       onSnapshot(notesCollectionQuery, (querySnapshot) => {

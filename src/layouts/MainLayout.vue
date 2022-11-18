@@ -8,7 +8,7 @@
           round
           icon="menu"
           aria-label="Menu"
-          @click="toggleLeftDrawer"
+          @click="mainStore.toggleLeftDrawer"
         />
         <q-space></q-space>
         <q-btn flat round dense icon="notifications" class="q-mr-md" />
@@ -49,59 +49,66 @@
       />
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" :show-if-above="false" bordered>
+    <q-drawer
+      v-model="mainStore.leftDrawerOpen"
+      :show-if-above="false"
+      bordered
+    >
       <div class="q-pa-md">
-        <p class="text-h6">Me connecter</p>
-        <p class="text-caption text-grey">
-          Entrez vos identifiants pour vous connecter
-        </p>
-        <q-form @submit.prevent="onSubmit">
-          <q-input
-            v-model="credentials.email"
-            class="q-mb-md"
-            filled
-            type="email"
-            placeholder="Email"
-          />
-          <q-input
-            v-model="credentials.password"
-            class="q-mb-md"
-            filled
-            placeholder="Mot de passe"
-            :type="isPwd ? 'password' : 'text'"
-          >
-            <template v-slot:append>
-              <q-icon
-                :name="isPwd ? 'visibility_off' : 'visibility'"
-                class="cursor-pointer"
-                @click="isPwd = !isPwd"
-              />
-            </template>
-          </q-input>
-          <div>
-            <q-btn
-              type="submit"
-              @click="register = false"
-              label="Me connecter"
-              color="secondary"
-            /><br />
-            <q-btn
-              type="submit"
-              @click="register = true"
-              label="Créer un compte"
-              color="primary"
-              flat
-              class="q-mt-sm"
+        <template v-if="!authStore.user.uid">
+          <p class="text-h6">Me connecter</p>
+          <p class="text-caption text-grey">
+            Entrez vos identifiants pour vous connecter
+          </p>
+          <q-form @submit.prevent="onSubmit">
+            <q-input
+              v-model="credentials.email"
+              class="q-mb-md"
+              filled
+              type="email"
+              placeholder="Email"
             />
-          </div>
-        </q-form>
-        <!-- Logout button here as long as we don't have user in state -->
-        <q-btn
-          @click="authStore.logoutUser"
-          label="Me déconnecter"
-          class="q-mt-sm"
-          color="pink"
-        />
+            <q-input
+              v-model="credentials.password"
+              class="q-mb-md"
+              filled
+              placeholder="Mot de passe"
+              :type="isPwd ? 'password' : 'text'"
+            >
+              <template v-slot:append>
+                <q-icon
+                  :name="isPwd ? 'visibility_off' : 'visibility'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
+                />
+              </template>
+            </q-input>
+            <div>
+              <q-btn
+                type="submit"
+                @click="register = false"
+                label="Me connecter"
+                color="secondary"
+              /><br />
+              <q-btn
+                type="submit"
+                @click="register = true"
+                label="Créer un compte"
+                color="primary"
+                flat
+                class="q-mt-sm"
+              />
+            </div>
+          </q-form>
+        </template>
+        <template v-else>
+          <p class="text-h6">Bonjour {{ authStore.user.email }} !</p>
+          <q-btn
+            @click="authStore.logoutUser"
+            label="Me déconnecter"
+            color="secondary"
+          />
+        </template>
       </div>
     </q-drawer>
 
@@ -116,13 +123,16 @@
 import { reactive, ref } from "vue";
 import { useNotesStore } from "src/stores/notesStore";
 import { useAuthStore } from "src/stores/authStore";
+import { useMainStore } from "src/stores/mainStore";
 
 // Store
 const notesStore = useNotesStore();
 const authStore = useAuthStore();
+const mainStore = useMainStore();
 
 // Notes
 const newNote = ref("");
+const addNoteInputVisible = ref(false);
 
 // Add note
 const addNote = () => {
@@ -130,10 +140,6 @@ const addNote = () => {
   newNote.value = "";
   toggleAddNoteInputVisibility();
 };
-
-// Refs
-const leftDrawerOpen = ref(false);
-const addNoteInputVisible = ref(false);
 
 // Register / login
 const register = ref(false);
@@ -157,10 +163,6 @@ const onSubmit = () => {
     }
   }
 };
-
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value;
-}
 
 function toggleAddNoteInputVisibility() {
   addNoteInputVisible.value = !addNoteInputVisible.value;
