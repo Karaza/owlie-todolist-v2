@@ -7,4 +7,9 @@ export interface Note {
   expanded: boolean;
 }
 
-const arr: Note[] = [];
+// const arr: Note[] = [];
+
+export interface User {
+  uid: string;
+  email: string | null;
+}

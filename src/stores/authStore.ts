@@ -1,16 +1,30 @@
 import { defineStore } from "pinia";
+import { User } from "../components/models";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from "../firebase";
 
 export const useAuthStore = defineStore("authStore", {
   state: () => {
-    return {};
+    return {
+      user: {} as User,
+    };
   },
   actions: {
+    init() {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          this.user.uid = user.uid;
+          this.user.email = user.email;
+        } else {
+          this.user = {} as User;
+        }
+      });
+    },
     registerUser(credentials: { email: string; password: string }) {
       createUserWithEmailAndPassword(
         auth,

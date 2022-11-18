@@ -5,11 +5,11 @@
 <script setup lang="ts">
 // Imports
 import { onMounted } from "vue";
-import { useNotesStore } from "src/stores/notesStore";
+import { useAuthStore } from "src/stores/authStore";
 
 // Store
-const notesStore = useNotesStore();
+const authStore = useAuthStore();
 
 // Connecting to firestore
-onMounted(() => notesStore.getNotes());
+onMounted(() => authStore.init());
 </script>
