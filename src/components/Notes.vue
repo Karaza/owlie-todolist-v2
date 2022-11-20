@@ -36,7 +36,12 @@
               :validate="(val: string) => val.length > 0"
               v-slot="scope"
             >
-              <q-input v-model="scope.value" dense autofocus>
+              <q-input
+                @keyup.enter="editNote(note.id as string, scope.value, scope)"
+                v-model="scope.value"
+                dense
+                autofocus
+              >
                 <template v-slot:after>
                   <q-btn
                     flat
