@@ -17,6 +17,8 @@ import { db } from "../firebase";
 let notesCollectionRef: any;
 let notesCollectionQuery: any;
 
+let unsubscribeSnapshots: any = null;
+
 export const useNotesStore = defineStore("notesStore", {
   state: () => {
     return {
@@ -36,28 +38,32 @@ export const useNotesStore = defineStore("notesStore", {
     async getNotes() {
       this.notesLoaded = false;
 
-      onSnapshot(notesCollectionQuery, (querySnapshot: any) => {
-        const notes: Note[] = [];
+      unsubscribeSnapshots = onSnapshot(
+        notesCollectionQuery,
+        (querySnapshot: any) => {
+          const notes: Note[] = [];
 
-        querySnapshot.forEach((doc: any) => {
-          const note: Note = {
-            id: doc.id,
-            title: doc.data().title,
-            content: doc.data().content,
-            date: doc.data().date,
-            done: doc.data().done,
-            expanded: doc.data().expanded,
-          };
-          notes.push(note);
-        });
+          querySnapshot.forEach((doc: any) => {
+            const note: Note = {
+              id: doc.id,
+              title: doc.data().title,
+              content: doc.data().content,
+              date: doc.data().date,
+              done: doc.data().done,
+              expanded: doc.data().expanded,
+            };
+            notes.push(note);
+          });
 
-        this.notes = notes;
+          this.notes = notes;
 
-        this.notesLoaded = true;
-      });
+          this.notesLoaded = true;
+        }
+      );
     },
     clearNotes() {
       this.notes = [];
+      if (unsubscribeSnapshots) unsubscribeSnapshots(); // Unsubscribe for any active listener when logging out
     },
     async addNote(newNoteTitle: string) {
       let note: Note = {
