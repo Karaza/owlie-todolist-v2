@@ -26,6 +26,7 @@ export const useAuthStore = defineStore("authStore", {
           notesStore.init();
         } else {
           this.user = {} as User;
+          notesStore.clearNotes();
         }
       });
     },

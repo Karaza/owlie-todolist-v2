@@ -56,6 +56,9 @@ export const useNotesStore = defineStore("notesStore", {
         this.notesLoaded = true;
       });
     },
+    clearNotes() {
+      this.notes = [];
+    },
     async addNote(newNoteTitle: string) {
       let note: Note = {
         title: newNoteTitle,

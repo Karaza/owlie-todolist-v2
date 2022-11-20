@@ -103,11 +103,7 @@
         </template>
         <template v-else>
           <p class="text-h6">Bonjour {{ authStore.user.email }} !</p>
-          <q-btn
-            @click="authStore.logoutUser"
-            label="Me déconnecter"
-            color="secondary"
-          />
+          <q-btn @click="logout" label="Me déconnecter" color="secondary" />
         </template>
       </div>
     </q-drawer>
@@ -162,6 +158,13 @@ const onSubmit = () => {
       authStore.loginUser(credentials);
     }
   }
+};
+
+// Logout
+const logout = () => {
+  credentials.email = "";
+  credentials.password = "";
+  authStore.logoutUser();
 };
 
 function toggleAddNoteInputVisibility() {
