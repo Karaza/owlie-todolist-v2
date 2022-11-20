@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated class="bg-primary">
+    <q-header elevated class="bg-primary q-py-sm">
       <q-toolbar class="text-blue-grey-2">
         <q-btn
           flat
@@ -9,6 +9,7 @@
           icon="menu"
           aria-label="Menu"
           @click="mainStore.toggleLeftDrawer"
+          class="q-mb-sm"
         />
         <q-space></q-space>
         <q-toolbar-title class="q-pt-md q-pb-lg">
@@ -18,37 +19,9 @@
         <q-btn flat round dense icon="share" class="q-mr-md" />
         <q-btn flat round dense icon="search" />
       </q-toolbar>
-
-      <q-toolbar inset>
-        <q-input
-          @keyup.enter="addNote"
-          dark
-          filled
-          bottom-slots
-          v-model="newNote"
-          autofocus
-          label="Ajouter un élement"
-          bg-color="dark"
-          color="secondary"
-          v-show="addNoteInputVisible"
-          class="col col-md-6 q-mx-auto"
-        >
-          <template v-slot:append>
-            <q-btn
-              @click="addNote"
-              dense
-              round
-              icon="add"
-              color="secondary"
-              :disabled="!newNote"
-            />
-          </template>
-        </q-input>
-      </q-toolbar>
       <q-btn
         v-if="authStore.user.uid"
-        @click="toggleAddNoteInputVisibility"
-        v-show="!addNoteInputVisible"
+        @click="addNoteModal = true"
         round
         fab-mini
         icon="add"
@@ -121,6 +94,44 @@
       <router-view />
     </q-page-container>
   </q-layout>
+
+  <q-dialog v-model="addNoteModal">
+    <q-card style="width: 700px; max-width: 80vw">
+      <q-card-section>
+        <div class="text-h6">Ajouter une note</div>
+      </q-card-section>
+      <q-card-section class="q-pt-none">
+        <q-form @submit="addNote" class="q-gutter-md">
+          <q-input
+            filled
+            v-model="newNoteTitle"
+            label="Titre de la note"
+            hint="Celui-ci ne pourra pas être modifié après création"
+            :rules="[(val) => val.length > 0 || 'Veuillez saisir un titre']"
+          />
+          <q-input
+            filled
+            v-model="newNoteContent"
+            label="Contenu de la note"
+            :rules="[
+              (val) =>
+                val.length > 0 || 'Veuillez saisir au moins un caractère',
+            ]"
+          />
+          <div class="text-right">
+            <q-btn
+              label="Annuler"
+              color="primary"
+              flat
+              class="q-ml-sm"
+              v-close-popup
+            />
+            <q-btn label="Ajouter" type="submit" color="primary" />
+          </div>
+        </q-form>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup lang="ts">
@@ -136,14 +147,18 @@ const authStore = useAuthStore();
 const mainStore = useMainStore();
 
 // Notes
-const newNote = ref("");
-const addNoteInputVisible = ref(false);
+const newNoteTitle = ref("");
+const newNoteContent = ref("");
 
 // Add note
+const addNoteModal = ref(false);
 const addNote = () => {
-  notesStore.addNote(newNote.value);
-  newNote.value = "";
-  toggleAddNoteInputVisibility();
+  notesStore.addNote(newNoteTitle.value, newNoteContent.value);
+
+  newNoteTitle.value = "";
+  newNoteContent.value = "";
+
+  addNoteModal.value = false;
 };
 
 // Register / login
@@ -175,8 +190,4 @@ const logout = () => {
   credentials.password = "";
   authStore.logoutUser();
 };
-
-function toggleAddNoteInputVisibility() {
-  addNoteInputVisible.value = !addNoteInputVisible.value;
-}
 </script>

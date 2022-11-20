@@ -4,16 +4,12 @@
   </p>
   <div v-else class="q-pa-md col-md-8 col">
     <div class="row justify-center q-mb-sm q-gutter-md">
-      <q-btn
-        @click="notesStore.checkAll"
-        label="Tout cocher"
-        color="secondary"
-      />
+      <q-btn @click="notesStore.checkAll" label="Tout cocher" color="primary" />
       <q-btn
         @click="notesStore.uncheckAll"
         label="Tout décocher"
         outline
-        color="secondary"
+        color="primary"
       />
     </div>
     <div class="text-center">

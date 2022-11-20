@@ -65,10 +65,10 @@ export const useNotesStore = defineStore("notesStore", {
       this.notes = [];
       if (unsubscribeSnapshots) unsubscribeSnapshots(); // Unsubscribe for any active listener when logging out
     },
-    async addNote(newNoteTitle: string) {
+    async addNote(newNoteTitle: string, newNoteContent: string) {
       let note: Note = {
         title: newNoteTitle,
-        content: "Note vide pour le moment, cliquez pour éditer",
+        content: newNoteContent,
         date: new Date().getTime(),
         done: false,
         expanded: false,
