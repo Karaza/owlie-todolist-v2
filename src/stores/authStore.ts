@@ -14,6 +14,7 @@ export const useAuthStore = defineStore("authStore", {
   state: () => {
     return {
       user: {} as User,
+      error: "",
     };
   },
   actions: {
@@ -41,23 +42,26 @@ export const useAuthStore = defineStore("authStore", {
       )
         .then((userCredential) => {
           const user = userCredential.user;
+          this.error = "";
         })
         .catch((error) => {
+          this.error = "";
           switch (error.code) {
             case "auth/email-already-in-use":
-              alert("Adresse email déjà utilisée");
+              this.error = "Adresse email déjà utilisée";
               break;
             case "auth/invalid-email":
-              alert("Adresse email invalide");
+              this.error = "Adresse email invalide";
               break;
             case "auth/operation-not-allowed":
-              alert("Operation non autorisée");
+              this.error = "Operation non autorisée";
               break;
             case "auth/weak-password":
-              alert("Le mot de passe doit contenir au moins 6 caractères.");
+              this.error =
+                "Le mot de passe doit contenir au moins 6 caractères.";
               break;
             default:
-              alert("Erreur, réessayez ultérieurement");
+              this.error = "Erreur, réessayez ultérieurement";
           }
         });
     },
@@ -67,22 +71,23 @@ export const useAuthStore = defineStore("authStore", {
           const user = userCredential.user;
         })
         .catch((error) => {
+          this.error = "";
           switch (error.code) {
             case "auth/user-not-found":
-              alert("Utilisateur non trouvé");
+              this.error = "Utilisateur non trouvé";
               break;
             case "auth/wrong-password":
-              alert("Mauvais mot de passe");
+              this.error = "Mauvais mot de passe";
               break;
             default:
-              alert("Erreur, réessayez ultérieurement");
+              this.error = "Erreur, réessayez ultérieurement";
           }
         });
     },
     logoutUser() {
       signOut(auth)
         .then(() => {
-          //
+          this.error = "";
         })
         .catch((error) => {
           //

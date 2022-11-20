@@ -82,6 +82,13 @@
               />
             </div>
           </q-form>
+          <q-banner
+            v-if="authStore.error"
+            inline-actions
+            class="text-white bg-red q-mt-sm"
+          >
+            {{ authStore.error }}
+          </q-banner>
         </template>
         <template v-else>
           <p class="text-h6">Bonjour {{ authStore.user.email }} !</p>
@@ -174,7 +181,7 @@ const credentials = reactive({
 // Submit
 const onSubmit = () => {
   if (!credentials.email || !credentials.password) {
-    alert("Veuillez saisir un email et un mot de passe");
+    authStore.error = "Veuillez saisir un email et un mot de passe";
   } else {
     if (register.value) {
       authStore.registerUser(credentials);
