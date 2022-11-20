@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNotesStore } from "./notesStore";
+import { useMainStore } from "./mainStore";
 
 export const useAuthStore = defineStore("authStore", {
   state: () => {
@@ -18,12 +19,14 @@ export const useAuthStore = defineStore("authStore", {
   actions: {
     init() {
       const notesStore = useNotesStore();
+      const mainStore = useMainStore();
 
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.user.uid = user.uid;
           this.user.email = user.email;
           notesStore.init();
+          mainStore.toggleLeftDrawer();
         } else {
           this.user = {} as User;
           notesStore.clearNotes();
