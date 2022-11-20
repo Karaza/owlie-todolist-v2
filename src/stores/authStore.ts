@@ -41,10 +41,8 @@ export const useAuthStore = defineStore("authStore", {
       )
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log("user: ", user);
         })
         .catch((error) => {
-          console.log("error message: ", error.message);
           switch (error.code) {
             case "auth/email-already-in-use":
               alert("Adresse email déjà utilisée");
@@ -67,10 +65,8 @@ export const useAuthStore = defineStore("authStore", {
       signInWithEmailAndPassword(auth, credentials.email, credentials.password)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log(user);
         })
         .catch((error) => {
-          console.log("error message: ", error.message);
           switch (error.code) {
             case "auth/user-not-found":
               alert("Utilisateur non trouvé");
@@ -86,10 +82,10 @@ export const useAuthStore = defineStore("authStore", {
     logoutUser() {
       signOut(auth)
         .then(() => {
-          console.log("user signed out");
+          //
         })
         .catch((error) => {
-          console.log("error message: ", error.message);
+          //
         });
     },
   },
