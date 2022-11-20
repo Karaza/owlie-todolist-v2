@@ -65,9 +65,9 @@
     >
       <div class="q-pa-md">
         <template v-if="!authStore.user.uid">
-          <p class="text-h6">Me connecter</p>
+          <p class="text-h6">Me connecter / M'enregister</p>
           <p class="text-caption text-grey">
-            Entrez vos identifiants pour vous connecter
+            Entrez vos identifiants pour vous connecter ou pour créer un compte
           </p>
           <q-form @submit.prevent="onSubmit">
             <q-input
