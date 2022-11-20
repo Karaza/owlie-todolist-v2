@@ -97,5 +97,21 @@ export const useNotesStore = defineStore("notesStore", {
         this.deleteNote(note.id as string);
       });
     },
+    async checkAll() {
+      this.notes.forEach((note) => {
+        updateDoc(doc(notesCollectionRef, note.id), {
+          id: note.id,
+          done: true,
+        });
+      });
+    },
+    async uncheckAll() {
+      this.notes.forEach((note) => {
+        updateDoc(doc(notesCollectionRef, note.id), {
+          id: note.id,
+          done: false,
+        });
+      });
+    },
   },
 });

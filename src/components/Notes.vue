@@ -3,12 +3,26 @@
     Aucun élement pour le moment...
   </p>
   <div v-else class="q-pa-md col-md-8 col">
-    <div class="row justify-around q-mb-lg">
+    <div class="row justify-center q-mb-sm q-gutter-md">
       <q-btn
-        @click="notesStore.clearDoneNotes"
-        label="Supprimer les notes cochées"
+        @click="notesStore.checkAll"
+        label="Tout cocher"
+        color="secondary"
+      />
+      <q-btn
+        @click="notesStore.uncheckAll"
+        label="Tout décocher"
         outline
         color="secondary"
+      />
+    </div>
+    <div class="text-center">
+      <q-btn
+        class="q-mb-lg"
+        @click="notesStore.clearDoneNotes"
+        label="Supprimer les notes cochées"
+        flat
+        color="dark"
       />
     </div>
     <transition-group
