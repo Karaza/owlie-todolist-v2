@@ -46,6 +46,7 @@
         </q-input>
       </q-toolbar>
       <q-btn
+        v-if="authStore.user.uid"
         @click="toggleAddNoteInputVisibility"
         v-show="!addNoteInputVisible"
         round
