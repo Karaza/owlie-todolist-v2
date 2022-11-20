@@ -10,11 +10,12 @@ import {
   deleteDoc,
   updateDoc,
 } from "firebase/firestore";
+import { useAuthStore } from "./authStore";
 
 import { db } from "../firebase";
 
-const notesCollectionRef = collection(db, "notes");
-const notesCollectionQuery = query(notesCollectionRef, orderBy("date", "desc"));
+let notesCollectionRef: any;
+let notesCollectionQuery: any;
 
 export const useNotesStore = defineStore("notesStore", {
   state: () => {
@@ -24,13 +25,21 @@ export const useNotesStore = defineStore("notesStore", {
     };
   },
   actions: {
+    init() {
+      const authStore = useAuthStore();
+
+      // Initialize our database refs
+      notesCollectionRef = collection(db, "users", authStore.user.uid, "notes");
+      notesCollectionQuery = query(notesCollectionRef, orderBy("date", "desc"));
+      this.getNotes();
+    },
     async getNotes() {
       this.notesLoaded = false;
 
-      onSnapshot(notesCollectionQuery, (querySnapshot) => {
+      onSnapshot(notesCollectionQuery, (querySnapshot: any) => {
         const notes: Note[] = [];
 
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach((doc: any) => {
           const note: Note = {
             id: doc.id,
             title: doc.data().title,
