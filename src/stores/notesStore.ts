@@ -80,7 +80,10 @@ export const useNotesStore = defineStore("notesStore", {
       await deleteDoc(doc(notesCollectionRef, idToDelete));
     },
     async editNote(id: string, newNoteContent: string) {
-      await updateDoc(doc(notesCollectionRef, id), { content: newNoteContent });
+      await updateDoc(doc(notesCollectionRef, id), {
+        id,
+        content: newNoteContent,
+      });
     },
   },
 });

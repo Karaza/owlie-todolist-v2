@@ -26,7 +26,7 @@ export const useAuthStore = defineStore("authStore", {
           this.user.uid = user.uid;
           this.user.email = user.email;
           notesStore.init();
-          mainStore.toggleLeftDrawer();
+          mainStore.leftDrawerOpen = false;
         } else {
           this.user = {} as User;
           notesStore.clearNotes();
