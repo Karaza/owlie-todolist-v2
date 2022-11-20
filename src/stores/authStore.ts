@@ -42,6 +42,22 @@ export const useAuthStore = defineStore("authStore", {
         })
         .catch((error) => {
           console.log("error message: ", error.message);
+          switch (error.code) {
+            case "auth/email-already-in-use":
+              alert("Adresse email déjà utilisée");
+              break;
+            case "auth/invalid-email":
+              alert("Adresse email invalide");
+              break;
+            case "auth/operation-not-allowed":
+              alert("Operation non autorisée");
+              break;
+            case "auth/weak-password":
+              alert("Le mot de passe doit contenir au moins 6 caractères.");
+              break;
+            default:
+              alert("Erreur, réessayez ultérieurement");
+          }
         });
     },
     loginUser(credentials: { email: string; password: string }) {
@@ -52,6 +68,16 @@ export const useAuthStore = defineStore("authStore", {
         })
         .catch((error) => {
           console.log("error message: ", error.message);
+          switch (error.code) {
+            case "auth/user-not-found":
+              alert("Utilisateur non trouvé");
+              break;
+            case "auth/wrong-password":
+              alert("Mauvais mot de passe");
+              break;
+            default:
+              alert("Erreur, réessayez ultérieurement");
+          }
         });
     },
     logoutUser() {
