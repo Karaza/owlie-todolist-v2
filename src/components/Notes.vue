@@ -21,7 +21,11 @@
           :class="{ ellipsis: !note.expanded }"
         >
           {{ note.content }}
-          <q-popup-edit v-model="note.content" v-slot="scope">
+          <q-popup-edit
+            v-model="note.content"
+            :validate="(val: string) => val.length > 0"
+            v-slot="scope"
+          >
             <q-input v-model="scope.value" dense autofocus>
               <template v-slot:after>
                 <q-btn
@@ -30,6 +34,10 @@
                   color="negative"
                   icon="cancel"
                   @click.stop.prevent="scope.cancel"
+                  :rules="[
+                    (val: string) =>
+                      scope.validate(val) || 'More than 5 chars required',
+                  ]"
                 />
 
                 <q-btn

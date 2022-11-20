@@ -21,6 +21,7 @@
           Owlie Todolist
         </q-toolbar-title>
         <q-input
+          @keyup.enter="addNote"
           dark
           filled
           bottom-slots
@@ -33,7 +34,14 @@
           class="col col-md-6 q-mx-auto"
         >
           <template v-slot:append>
-            <q-btn @click="addNote" dense round icon="add" color="secondary" />
+            <q-btn
+              @click="addNote"
+              dense
+              round
+              icon="add"
+              color="secondary"
+              :disabled="!newNote"
+            />
           </template>
         </q-input>
       </q-toolbar>
