@@ -1,6 +1,6 @@
-# Owlie Todolist (owlie-todolist)
+# Owlie Todolist (owlie-todolist-v2)
 
-Test d'aptitude Owlie : Réalisation d'un projet todolist
+Test d'aptitude Owlie : Réalisation d'un projet todolist V2
 
 ## Install the dependencies
 

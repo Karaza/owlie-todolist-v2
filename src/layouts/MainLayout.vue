@@ -11,15 +11,15 @@
           @click="mainStore.toggleLeftDrawer"
         />
         <q-space></q-space>
+        <q-toolbar-title class="q-pt-md q-pb-lg">
+          Owlie Todolist
+        </q-toolbar-title>
         <q-btn flat round dense icon="notifications" class="q-mr-md" />
         <q-btn flat round dense icon="share" class="q-mr-md" />
         <q-btn flat round dense icon="search" />
       </q-toolbar>
 
       <q-toolbar inset>
-        <q-toolbar-title v-show="!addNoteInputVisible" class="q-pt-md q-pb-lg">
-          Owlie Todolist
-        </q-toolbar-title>
         <q-input
           @keyup.enter="addNote"
           dark
