@@ -1,12 +1,13 @@
 {
-  "name": "owlie-todo-script",
+  "name": "owlie-todolist",
   "version": "0.0.1",
   "description": "Test d'aptitude Owlie : Réalisation d'un projet todolist",
   "productName": "Owlie Todolist",
   "author": "Sophie Kowalski <skowalski57@gmail.com>",
   "private": true,
   "scripts": {
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "deploy": "push-dir --dir=dist/spa --remote=gh-pages --branch=master"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
