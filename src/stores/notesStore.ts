@@ -85,5 +85,17 @@ export const useNotesStore = defineStore("notesStore", {
         content: newNoteContent,
       });
     },
+    async toggleDoneNote(id: string, doneValue: boolean) {
+      await updateDoc(doc(notesCollectionRef, id), {
+        id,
+        done: doneValue,
+      });
+    },
+    async clearDoneNotes() {
+      const doneNotes = this.notes.filter((note) => note.done === true);
+      doneNotes.forEach((note) => {
+        this.deleteNote(note.id as string);
+      });
+    },
   },
 });

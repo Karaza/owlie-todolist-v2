@@ -3,26 +3,38 @@
     Aucun élement pour le moment...
   </p>
   <div v-else class="q-pa-md col-md-8 col">
+    <div class="row justify-around q-mb-lg">
+      <q-btn
+        @click="notesStore.clearDoneNotes"
+        label="Supprimer les notes cochées"
+        outline
+        color="secondary"
+      />
+    </div>
     <transition-group
       appear
       enter-active-class="animated fadeIn slow"
       leave-active-class="animated fadeOut slow"
     >
-      <div v-for="(note, index) in notes" :key="index" class="q-mb-md">
+      <div v-for="(note, index) in notes" :key="index" class="q-mb-lg">
         <div class="q-mb-md">
           <div
             @click="note.expanded = !note.expanded"
             title="Cliquez pour dérouler le contenu"
-            class="row justify-between items-center bg-grey-2 q-py-xs q-px-md cursor-pointer"
+            class="row justify-between items-center q-py-xs q-px-md cursor-pointer"
+            :class="note.done ? 'bg-green-1' : 'bg-grey-2'"
           >
-            <span class="text-subtitle1">{{ note.title }}</span>
+            <span
+              class="text-subtitle1"
+              :class="{ 'text-strike text-grey-6': note.done }"
+              >{{ note.title }}</span
+            >
             <q-checkbox
-              cursor-trash
-              @click="notesStore.deleteNote(note.id as string)"
+              @click="notesStore.toggleDoneNote(note.id as string, note.done)"
               v-model="note.done"
               class="text-right"
               color="secondary"
-              title="Supprimer la note"
+              title="Cocher/décocher la note"
             />
           </div>
           <div
