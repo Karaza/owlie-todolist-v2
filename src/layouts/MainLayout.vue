@@ -11,7 +11,6 @@
           @click="mainStore.toggleLeftDrawer"
           class="q-mb-sm"
         />
-        <q-space></q-space>
         <q-toolbar-title class="q-pt-md q-pb-lg">
           Owlie Todolist
         </q-toolbar-title>
